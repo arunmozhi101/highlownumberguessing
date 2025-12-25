@@ -1,4 +1,8 @@
-﻿const int MAXIMUM_ATTEMPTS = 7;
+﻿const int MAXIMUM_ATTEMPTS = 7; // Maximum number of attempts an user has to guess the random number.
+const int TOO_CLOSE_VALUE = 5; // If the guess is close to the random number by this number then is it too close.
+const int RANGE_MIN_VALUE = 1;
+const int RANGE_MAX_VALUE = 101;
+
 
 Console.WriteLine("Welcome to the High Low Number Guessing Program!");
 Console.WriteLine("Press any key to continue...");
@@ -8,7 +12,7 @@ while (true)
 {
     Console.Clear();
     Random rng = new Random();
-    int randomNumber = rng.Next(0, 10);
+    int randomNumber = rng.Next(RANGE_MIN_VALUE, RANGE_MAX_VALUE);
 
     Console.WriteLine("Computer: Guess the number I have in my mind.");
     Console.WriteLine($"You've a maximum of {MAXIMUM_ATTEMPTS} attempts.");
@@ -44,17 +48,17 @@ while (true)
             break;
         }
 
-        if (diff >= -5 && diff <= 5)
+        if (diff >= -TOO_CLOSE_VALUE && diff <= TOO_CLOSE_VALUE)
         {
             Console.WriteLine("You're close!");
         }
 
-        if (diff > 5)
+        if (diff > TOO_CLOSE_VALUE)
         {
             Console.WriteLine("Too High!");
         }
 
-        if (diff < -5)
+        if (diff < -TOO_CLOSE_VALUE)
         {
             Console.WriteLine("Too Low!");
         }
