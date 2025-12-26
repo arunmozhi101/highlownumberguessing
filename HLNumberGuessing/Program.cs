@@ -27,7 +27,8 @@ while (true)
             switch (attemptsRemaining)
             {
                 case > 3:
-                    Console.WriteLine($"OMG! You guessed it in only {MAXIMUM_ATTEMPTS - attemptsRemaining} attempts! Are you Psychic?");
+                    Console.WriteLine(
+                        $"OMG! You guessed it in only {MAXIMUM_ATTEMPTS - attemptsRemaining} attempts! Are you Psychic?");
                     Console.WriteLine("Press any key to continue...");
                     Console.ReadLine();
                     break;
@@ -71,8 +72,14 @@ while (true)
         {
             Console.WriteLine($"Sorry you used up all the attempts. Here is the number I guessed - {randomNumber}");
             Console.WriteLine($"Good Luck next time!");
-            Console.WriteLine("Press any key to continue...");
-            Console.ReadLine();
         }
+    }
+
+    Console.WriteLine("Do you want to continue playing?(Y/N)");
+    string continuePlay = Console.ReadLine().ToLower();
+    if (continuePlay == "n")
+    {
+        Console.WriteLine($"Thanks for playing the High Low Number Guessing Game!");
+        break;
     }
 }
