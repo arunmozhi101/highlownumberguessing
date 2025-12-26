@@ -1,4 +1,4 @@
-﻿const int MAXIMUM_ATTEMPTS = 7; // Maximum number of attempts an user has to guess the random number.
+﻿const int MAXIMUM_ATTEMPTS = 7; // Maximum number of attempts a user has to guess the random number.
 const int TOO_CLOSE_VALUE = 5; // If the guess is close to the random number by this number then is it too close.
 const int RANGE_MIN_VALUE = 1;
 const int RANGE_MAX_VALUE = 101;
@@ -14,6 +14,9 @@ while (true)
     Random rng = new Random();
     int randomNumber = rng.Next(RANGE_MIN_VALUE, RANGE_MAX_VALUE);
 
+    int attemptsThatUserWonOn = 0;
+    int userWonOrLost = 0; // 0 = Lost and 1 = Won
+
     Console.WriteLine("Computer: Guess the number I have in my mind.");
     Console.WriteLine($"You've a maximum of {MAXIMUM_ATTEMPTS} attempts.");
 
@@ -24,28 +27,8 @@ while (true)
 
         if (diff == 0)
         {
-            switch (attemptsRemaining)
-            {
-                case > 3:
-                    Console.WriteLine(
-                        $"OMG! You guessed it in only {MAXIMUM_ATTEMPTS - attemptsRemaining} attempts! Are you Psychic?");
-                    Console.WriteLine("Press any key to continue...");
-                    Console.ReadLine();
-                    break;
-
-                case > 1:
-                    Console.WriteLine($"Well done! You guessed it in {MAXIMUM_ATTEMPTS - attemptsRemaining} attempts!");
-                    Console.WriteLine("Press any key to continue...");
-                    Console.ReadLine();
-                    break;
-
-                case > 0:
-                    Console.WriteLine("Finally!");
-                    Console.WriteLine("Press any key to continue...");
-                    Console.ReadLine();
-                    break;
-            }
-
+            userWonOrLost = 1;
+            attemptsThatUserWonOn = MAXIMUM_ATTEMPTS - attemptsRemaining;
             break;
         }
 
@@ -68,13 +51,38 @@ while (true)
         {
             Console.WriteLine($"You've {attemptsRemaining - 1} attempts remaining.");
         }
-        else
-        {
-            Console.WriteLine($"Sorry you used up all the attempts. Here is the number I guessed - {randomNumber}");
-            Console.WriteLine($"Good Luck next time!");
-        }
     }
 
+    if (userWonOrLost == 1)
+    {
+        switch (MAXIMUM_ATTEMPTS - attemptsThatUserWonOn)
+        {
+            case > 3:
+                Console.WriteLine(
+                    $"OMG! You guessed it in only {attemptsThatUserWonOn} attempts! Are you Psychic?");
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadLine();
+                break;
+
+            case > 1:
+                Console.WriteLine($"Well done! You guessed it in {attemptsThatUserWonOn} attempts!");
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadLine();
+                break;
+
+            case > 0:
+                Console.WriteLine("Finally!");
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadLine();
+                break;
+        }
+    }
+    else
+    {
+        Console.WriteLine($"Sorry you used up all the attempts. Here is the number I guessed - {randomNumber}");
+        Console.WriteLine($"Good Luck next time!");
+    }
+    
     Console.WriteLine("Do you want to continue playing?(Y/N)");
     string continuePlay = Console.ReadLine().ToLower();
     if (continuePlay == "n")
